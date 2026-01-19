@@ -5,12 +5,11 @@ export function createClient() {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    // Only throw error in browser, not during build
-    if (typeof window !== 'undefined') {
-      throw new Error('Missing Supabase environment variables. Please check your environment configuration.')
-    }
-    // Return a placeholder client during build to prevent build errors
-    return createBrowserClient('https://placeholder.supabase.co', 'placeholder-key')
+    // Return a safe dummy client that won't crash the app
+    // This allows the app to load even if env vars are missing
+    // The app should check for env vars and show a helpful message
+    console.warn('⚠️ Missing Supabase environment variables. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel.')
+    return createBrowserClient('https://placeholder.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTIwMDAsImV4cCI6MTk2MDc2ODAwMH0.placeholder')
   }
 
   return createBrowserClient(supabaseUrl, supabaseAnonKey)
