@@ -1,7 +1,6 @@
 # Bot directory - Discord bots need persistent connections and cannot run on Vercel serverless
 bot/
 scripts/
-*.md
 docs/
 
 # Development files

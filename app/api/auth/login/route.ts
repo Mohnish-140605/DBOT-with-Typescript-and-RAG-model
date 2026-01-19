@@ -64,7 +64,10 @@ export async function POST(request: Request) {
     const hasSupabaseCookies = cookiesAfter.some(c => c.name.startsWith('sb-'))
     if (data.session && !hasSupabaseCookies) {
       console.log('Login API: No Supabase cookies found, manually creating from session')
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      if (!supabaseUrl) {
+        return NextResponse.json({ error: 'Supabase URL not configured' }, { status: 500 })
+      }
       const urlParts = new URL(supabaseUrl)
       const projectRef = urlParts.hostname.split('.')[0]
       

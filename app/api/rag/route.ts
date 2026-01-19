@@ -2,9 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY environment variable is not set')
+  }
+  return new OpenAI({ apiKey })
+}
 
 export async function POST(request: Request) {
   try {
@@ -23,6 +27,7 @@ export async function POST(request: Request) {
     }
 
     // Generate embedding for query
+    const openai = getOpenAIClient()
     const embeddingResponse = await openai.embeddings.create({
       model: 'text-embedding-ada-002',
       input: query,
