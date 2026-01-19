@@ -9,5 +9,3 @@ const nextConfig = {
 
 module.exports = nextConfig
 
-// Forced restart to clear cache
-
