@@ -40,6 +40,9 @@ This architecture allows non-developers to safely manage AI behavior without red
 - Vector-based semantic search using pgvector
 - Context injection during response generation
 
+#Demo_Credentials
+username-testadmin1
+password-Test@2026
 ---
 
 ## System Architecture
